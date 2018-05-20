@@ -1,4 +1,4 @@
-package pl.edu.agh.wiet.studiesplanner;
+package pl.edu.agh.wiet.taiproject;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

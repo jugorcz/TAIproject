@@ -1,4 +1,4 @@
-package pl.edu.agh.wiet.studiesplanner;
+package pl.edu.agh.wiet.taiproject;
 
 import org.h2.server.web.WebServlet;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
