@@ -16,7 +16,7 @@
     </parent>
 
     <modules>
-        <module>sp_app</module>
+        <module>tai_app</module>
     </modules>
 
     <properties>

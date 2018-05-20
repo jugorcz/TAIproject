@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>sp-app</artifactId>
+    <artifactId>tai-app</artifactId>
 
     <build>
         <plugins>
