@@ -1,4 +1,4 @@
-package pl.edu.agh.wiet.taiproject;
+/*package pl.edu.agh.wiet.taiproject;
 
 import org.h2.server.web.WebServlet;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -14,4 +14,4 @@ public class ServletConfig {
         registration.addUrlMappings("/h2/*");
         return registration;
     }
-}
+}*/

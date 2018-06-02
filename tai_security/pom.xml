@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>tai-model</artifactId>
+    <artifactId>tai-security</artifactId>
 
 
 </project>

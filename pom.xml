@@ -19,6 +19,7 @@
     <modules>
         <module>tai_app</module>
         <module>tai_model</module>
+        <module>tai_security</module>
     </modules>
 
     <properties>
@@ -56,4 +57,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
 </project>
