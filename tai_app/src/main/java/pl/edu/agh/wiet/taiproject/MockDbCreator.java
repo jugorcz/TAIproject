@@ -21,12 +21,9 @@ import java.sql.Date;
 public class MockDbCreator implements ApplicationListener<ContextRefreshedEvent> {
 
     private static Logger logger = LoggerFactory.getLogger(MockDbCreator.class);
-    private final TaskRepository taskRepository;
 
     @Autowired
-    public MockDbCreator(TaskRepository userRepository) {
-        this.taskRepository = userRepository;
-    }
+    private TaskRepository taskRepository;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {

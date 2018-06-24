@@ -11,20 +11,20 @@ spring:
     console:
       enabled: true
       path: /h2
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
 
 # Datasource
 spring:
   datasource:
-    url: jdbc:h2:file:~/tai_db
+    url: jdbc:h2:file:~/db/tai_db
     username: sa
     password:
     driver-class-name: org.h2.Driver
     database-platform: org.hibernate.dialect.H2Dialect
 
-spring:
-  jpa:
-    hibernate:
-      ddl-auto: create
 
 iiet:
   client:

@@ -136,7 +136,7 @@ var AppComponent = /** @class */ (function () {
         this.getUserInfo();
     };
     AppComponent.prototype.logout = function () {
-        this.http.post('/api/logout', {}).subscribe(function (_) { });
+        this.http.post('/api/logout', {}).subscribe();
         this.userInfo = null;
         this.router.navigateByUrl('/');
     };
@@ -356,15 +356,15 @@ var TaskService = /** @class */ (function () {
         return this.http.get(this.taskUrl + ("/" + id)).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(this.handleError("getTask id=" + id)));
     };
     TaskService.prototype.putTask = function (task) {
-        return this.http.put(this.taskUrl, task, httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(this.handleError('putTask', [])));
+        return this.http.put(this.taskUrl, task, httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(this.handleError('putTask')));
     };
     TaskService.prototype.updateTask = function (task) {
-        return this.http.post(this.taskUrl, task, httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(this.handleError("updateTask id=" + task.id, [])));
+        return this.http.post(this.taskUrl, task, httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(this.handleError("updateTask id=" + task.id)));
     };
     TaskService.prototype.deleteTask = function (id) {
-        return this.http.delete(this.taskUrl + ("/" + id), httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(this.handleError("deleteTask id=" + id, [])));
+        return this.http.delete(this.taskUrl + ("/" + id), httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(this.handleError("deleteTask id=" + id)));
     };
-    TaskService.prototype.handleError = function (operation, result) {
+    TaskService.prototype.handleError = function (operation) {
         if (operation === void 0) { operation = 'operation'; }
         return function (error) {
             // TODO: send the error to remote logging infrastructure
@@ -372,7 +372,7 @@ var TaskService = /** @class */ (function () {
             // TODO: better job of transforming error for user consumption
             //this.messageService.log(`${operation} failed: ${error.message}`);
             // Let the app keep running by returning an empty result.
-            return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(result);
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(null);
         };
     };
     TaskService = __decorate([
@@ -418,7 +418,7 @@ var Task = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "/* HeroesComponent's private CSS styles */\n.tasks {\n  margin: 0 0 2em 0;\n  list-style-type: none;\n  padding: 0;\n  width: 15em;\n}\n.tasks li {\n  position: relative;\n  cursor: pointer;\n  background-color: #EEE;\n  margin: .5em;\n  padding: .3em 0;\n  height: 1.6em;\n  border-radius: 4px;\n}\n.tasks li:hover {\n  color: #607D8B;\n  background-color: #DDD;\n  left: .1em;\n}\n.tasks a {\n  color: #888;\n  text-decoration: none;\n  position: relative;\n  display: block;\n  width: 250px;\n}\n.tasks a:hover {\n  color:#607D8B;\n}\n.tasks .badge {\n  display: inline-block;\n  font-size: small;\n  color: white;\n  padding: 0.8em 0.7em 0 0.7em;\n  background-color: #607D8B;\n  line-height: 1em;\n  position: relative;\n  left: -1px;\n  top: -4px;\n  height: 1.8em;\n  min-width: 16px;\n  text-align: right;\n  margin-right: .8em;\n  border-radius: 4px 0 0 4px;\n}\n"
+module.exports = "/* HeroesComponent's private CSS styles */\n.tasks {\n  margin: 0 0 2em 0;\n  list-style-type: none;\n  padding: 0;\n  width: 15em;\n}\n.tasks li {\n  position: relative;\n  cursor: pointer;\n  background-color: #EEE;\n  margin: .5em;\n  padding: .3em 0;\n  height: 1.6em;\n  border-radius: 4px;\n}\n.tasks li:hover {\n  color: #607D8B;\n  background-color: #DDD;\n  left: .1em;\n}\n.tasks a {\n  color: #888;\n  text-decoration: none;\n  position: relative;\n  display: block;\n  width: 250px;\n}\n.tasks a:hover {\n  color:#607D8B;\n}\n.tasks .badge {\n  display: inline-block;\n  font-size: small;\n  color: white;\n  padding: 0.8em 0.7em 0 0.7em;\n  background-color: #607D8B;\n  line-height: 1em;\n  position: relative;\n  left: -1px;\n  top: -4px;\n  height: 1.8em;\n  min-width: 16px;\n  text-align: right;\n  margin-right: .8em;\n  border-radius: 4px 0 0 4px;\n}\n.tasks button {\n  float: right;\n}\n"
 
 /***/ }),
 
@@ -429,7 +429,7 @@ module.exports = "/* HeroesComponent's private CSS styles */\n.tasks {\n  margin
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h2>My Tasks</h2>\n<ul class=\"tasks\">\n  <li *ngFor=\"let task of tasks\">\n    <a routerLink=\"/task/{{task.id}}\">\n      <span class=\"badge\">{{task.id}}</span> {{task.name}}\n    </a>\n  </li>\n</ul>\n"
+module.exports = "<h2>My Tasks</h2>\n<ul class=\"tasks\">\n  <li *ngFor=\"let task of tasks\">\n    <div class=row>\n      <a routerLink=\"/task/{{task.id}}\">\n        <span class=\"badge\">{{task.id}}</span> {{task.name}}\n      </a>\n      <button (click)=\"delete(task.id)\">Delete</button>\n    </div>\n  </li>\n</ul>\n\n<div>\n  <label>name:\n    <input [(ngModel)]=\"currentTask.name\" placeholder=\"name\">\n  </label>\n  <button (click)=\"saveTask()\">save</button>\n</div>\n"
 
 /***/ }),
 
@@ -445,6 +445,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TasksComponent", function() { return TasksComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _task_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../task.service */ "./src/app/task.service.ts");
+/* harmony import */ var _task__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../task */ "./src/app/task.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -456,17 +457,33 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
 var TasksComponent = /** @class */ (function () {
-    function TasksComponent(heroService) {
-        this.heroService = heroService;
+    function TasksComponent(taskService) {
+        this.taskService = taskService;
     }
     TasksComponent.prototype.ngOnInit = function () {
         this.getTasks();
+        this.currentTask = new _task__WEBPACK_IMPORTED_MODULE_2__["Task"]();
     };
     TasksComponent.prototype.getTasks = function () {
         var _this = this;
-        this.heroService.getTasks().subscribe(function (tasks) { return _this.tasks = tasks; });
+        this.taskService.getTasks().subscribe(function (tasks) { return _this.tasks = tasks; });
     };
+    TasksComponent.prototype.delete = function (id) {
+        this.tasks = this.tasks.filter(function (t) { return t.id !== id; });
+        this.taskService.deleteTask(id).subscribe();
+    };
+    TasksComponent.prototype.saveTask = function () {
+        var _this = this;
+        this.taskService.putTask(this.currentTask).subscribe(function (task) { if (task !== null) {
+            _this.tasks.push(task);
+        } });
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", _task__WEBPACK_IMPORTED_MODULE_2__["Task"])
+    ], TasksComponent.prototype, "currentTask", void 0);
     TasksComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-tasks',

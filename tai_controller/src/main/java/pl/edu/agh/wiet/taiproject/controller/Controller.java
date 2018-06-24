@@ -29,7 +29,6 @@ public class Controller {
         if(principal != null)
             return ResponseEntity.ok(principal);
         else{
-            System.out.println("IS NULL");
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 
         }
@@ -38,33 +37,41 @@ public class Controller {
     @GetMapping("/task")
     public List<Task> getTaskList(Principal principal) {
         Stream<Task> taskStream = taskRepository.taskStream();
-        if(principal != null){
-            taskStream = taskStream.filter(task -> task.getUserId().equals(principal.getName()));
-            return taskStream.collect(Collectors.toList());
-        }
-        else
+        try {
+            if (principal != null) {
+                taskStream = taskStream.filter(task -> task.getUserId().equals(principal.getName()));
+                return taskStream.collect(Collectors.toList());
+            } else
+                return new ArrayList<>();
+        } catch (Exception e) {
             return new ArrayList<>();
+        }
     }
 
     @GetMapping("/task/{id}")
     public ResponseEntity<?> getTask(Principal principal, @PathVariable Long id) {
         Optional<Task> taskOptional;
-        taskOptional = taskRepository.findById(id);
-        if(taskOptional != null && taskOptional.isPresent() && taskOptional.get().getUserId().equals(principal.getName()))
-            return ResponseEntity.ok().body(taskOptional.get());
-        else
+        try {
+            taskOptional = taskRepository.findById(id);
+            if(taskOptional != null && taskOptional.isPresent() && taskOptional.get().getUserId().equals(principal.getName()))
+                return ResponseEntity.ok().body(taskOptional.get());
+            else
+                return ResponseEntity.badRequest().build();
+        } catch (Exception e) {
             return ResponseEntity.badRequest().build();
+        }
     }
 
     @PutMapping("/task")
-    public ResponseEntity<?> putTask(@RequestBody Task task){
+    public ResponseEntity<?> putTask(Principal principal, @RequestBody Task task){
         Task newTask = new Task(task);
+        newTask.setUserId(principal.getName());
         try {
             taskRepository.save(newTask);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e);
         }
-        return ResponseEntity.ok().body(task);
+        return ResponseEntity.ok().body(newTask);
     }
 
     @PostMapping("/task")
@@ -75,7 +82,7 @@ public class Controller {
                 return ResponseEntity.ok().body(task);
            }
             else
-                return ResponseEntity.badRequest().body("");
+                return ResponseEntity.badRequest().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e);
         }
