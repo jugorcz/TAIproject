@@ -10,34 +10,48 @@ public class Task {
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
-    private int id;
+    @Column(name="id")
+    private Long id;
 
-    @Column(name = "name")
+    @Column(name="name")
     private String name;
 
-    @Column(name = "status")
+    @Column(name="status")
     @Enumerated(EnumType.STRING)
     private TaskStatus taskStatus;
 
-
-    @Column(name = "date")
+    @Column(name="date")
     private Date date;
 
-    @ManyToOne
-    private Category category;
+    @Column(name="user_id")
+    private String userId;
 
-    public Task(String name, TaskStatus taskStatus, Date date) {
+    @Column(name="category")
+    private String category;
+
+    public Task() {}
+
+    public Task(String name, TaskStatus taskStatus, Date date, String userId, String category) {
         this.name = name;
         this.taskStatus = taskStatus;
         this.date = date;
+        this.userId = userId;
+        this.category = category;
     }
 
-    public int getId() {
+    public Task(Task other) {
+        this.name = other.name;
+        this.taskStatus = other.taskStatus;
+        this.date = other.date;
+        this.userId = other.userId;
+        this.category = other.category;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -65,11 +79,34 @@ public class Task {
         this.date = date;
     }
 
-    public Category getCategory() {
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(String category) {
         this.category = category;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Task task = (Task) o;
+
+        return id.equals(task.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 }

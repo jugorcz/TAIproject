@@ -39,17 +39,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/api**", "/login", "/api/oauth/**", "/error/**",
-                        "/accessDenied/**", "/h2", "/h2/**").permitAll()
-                .antMatchers("/authorized").fullyAuthenticated()
+                .antMatchers("/", "/api/login/oauth/**", "/error/**",
+                        "/accessDenied/**", "/h2", "/h2/**", "/root/ui/**" )
+                .permitAll()
+                .antMatchers("/task", "/task/**", "/api/**").authenticated()
                 .and().headers().frameOptions().disable()
-                .and().logout().logoutSuccessUrl("/").permitAll()
+                .and().logout().logoutUrl("/api/logout").logoutSuccessUrl("/").permitAll()
                 .and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .and().addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
     }
 
     private Filter ssoFilter() {
-        OAuth2ClientAuthenticationProcessingFilter iietFilter = new OAuth2ClientAuthenticationProcessingFilter("/login/oauth/iiet");
+        OAuth2ClientAuthenticationProcessingFilter iietFilter = new OAuth2ClientAuthenticationProcessingFilter("/api/login/oauth/iiet");
         OAuth2RestTemplate facebookTemplate = new OAuth2RestTemplate(iiet(), oAuth2ClientContext);
         iietFilter.setRestTemplate(facebookTemplate);
         UserInfoTokenServices tokenServices = new UserInfoTokenServices(iietResource().getUserInfoUri(), iiet().getClientId());
@@ -58,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         iietFilter.setAuthenticationSuccessHandler(new SimpleUrlAuthenticationSuccessHandler(){
             @Override
             public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-                this.setDefaultTargetUrl("/authorized");
+                this.setDefaultTargetUrl("/");
                 super.onAuthenticationSuccess(request, response, authentication);
             }
         });
