@@ -59,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         iietFilter.setAuthenticationSuccessHandler(new SimpleUrlAuthenticationSuccessHandler(){
             @Override
             public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-                this.setDefaultTargetUrl("/");
+                this.setDefaultTargetUrl("/#/calendar/dashboard");
                 super.onAuthenticationSuccess(request, response, authentication);
             }
         });

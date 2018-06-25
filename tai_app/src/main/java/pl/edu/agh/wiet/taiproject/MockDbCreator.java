@@ -30,7 +30,11 @@ public class MockDbCreator implements ApplicationListener<ContextRefreshedEvent>
         logger.info("Creating mock db");
         Task task = new Task("Sample", TaskStatus.UNCHECKED, Date.valueOf("2018-07-07"), "example", "example category");
         Task task2 = new Task("Sample2", TaskStatus.UNCHECKED, Date.valueOf("2018-07-07"), "cuQPNjvUyts2E4fCLyiy", "example category");
+        Task task3 = new Task("Sample3", TaskStatus.UNCHECKED, Date.valueOf("2018-06-27"), "cuQPNjvUyts2E4fCLyiy", "example category");
+        Task task4 = new Task("Sample4", TaskStatus.UNCHECKED, Date.valueOf("2018-06-26"), "cuQPNjvUyts2E4fCLyiy", "example category");
         taskRepository.save(task);
         taskRepository.save(task2);
+        taskRepository.save(task3);
+        taskRepository.save(task4);
     }
 }
