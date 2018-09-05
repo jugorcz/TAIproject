@@ -14,17 +14,13 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create
-
-# Datasource
-spring:
+      ddl-auto: update
   datasource:
     url: jdbc:h2:file:~/db/tai_db
     username: sa
     password:
     driver-class-name: org.h2.Driver
     database-platform: org.hibernate.dialect.H2Dialect
-
 
 iiet:
   client:

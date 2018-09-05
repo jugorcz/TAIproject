@@ -40,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/", "/api/login/oauth/**", "/error/**",
-                      "/accessDenied/**", "/h2", "/h2/**" )
+                      "/accessDenied/**")
                 .permitAll()
                 .antMatchers("/#/**", "/api/**").authenticated()
                 .and().headers().frameOptions().disable()
