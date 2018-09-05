@@ -40,11 +40,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/", "/api/login/oauth/**", "/error/**",
-                      "/accessDenied/**", "/h2", "/h2/**", "/root/ui/**" )
+                      "/accessDenied/**")
                 .permitAll()
-                .antMatchers("/task", "/task/**", "/api/**").authenticated()
+                .antMatchers("/#/**", "/api/**").authenticated()
                 .and().headers().frameOptions().disable()
-                .and().logout().logoutUrl("/api/logout").logoutSuccessUrl("/").permitAll()
+                .and().logout().logoutUrl("/api/logout")
                 .and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .and().addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
     }
